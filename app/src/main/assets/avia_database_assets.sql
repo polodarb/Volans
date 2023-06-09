@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS "flight" (
 	"departure_code"	INTEGER NOT NULL,
 	"arrival_code"	INTEGER NOT NULL,
 	"departure_date"	TEXT NOT NULL,
+	"arrival_date"	TEXT NOT NULL,
 	"departure_time"	TEXT NOT NULL,
 	"arrival_time"	TEXT NOT NULL,
 	"price"	REAL NOT NULL,

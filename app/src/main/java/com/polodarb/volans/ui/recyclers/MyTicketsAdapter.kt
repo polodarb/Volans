@@ -9,15 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.polodarb.volans.R
 import com.polodarb.volans.data.local.FlightCard
 import com.polodarb.volans.databinding.RvHomeCardBinding
+import com.polodarb.volans.databinding.RvHomeCardBuyBinding
 
-interface ItemClickListener {
-    fun itemOnClick(item: Int)
-}
 
-class HomeFlightCardAdapter(
+class MyTicketsAdapter(
     private val list: List<FlightCard>,
     private val mItemClickListener: ItemClickListener
-): RecyclerView.Adapter<HomeFlightCardAdapter.HomeFlightCardViewHolder>(), View.OnClickListener {
+): RecyclerView.Adapter<MyTicketsAdapter.HomeFlightCardViewHolder>(), View.OnClickListener {
 
     class HomeFlightCardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val card: CardView = itemView.findViewById<CardView>(R.id.flightCard)
@@ -33,7 +31,7 @@ class HomeFlightCardAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeFlightCardViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = RvHomeCardBinding.inflate(inflater, parent, false)
+        val view = RvHomeCardBuyBinding.inflate(inflater, parent, false)
 
         view.root.setOnClickListener(this)
 

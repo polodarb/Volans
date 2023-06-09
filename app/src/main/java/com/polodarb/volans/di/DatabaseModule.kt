@@ -19,13 +19,7 @@ object DatabaseModule {
     fun provideDatabase(
         app: Application
     ): AviaDatabase {
-        return Room.databaseBuilder(
-            app,
-            AviaDatabase::class.java,
-            "avia_database"
-        )
-//            .createFromAsset("avia_database_assets.sql")
-            .build()
+        return AviaDatabase.getInstance(app)
     }
 
     @Provides

@@ -75,7 +75,7 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/tv_town_departure"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
@@ -92,9 +92,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
                         android:src="@drawable/ic_geo"
-                        app:layout_constraintBottom_toBottomOf="@+id/textView2"
-                        app:layout_constraintStart_toEndOf="@+id/textView2"
-                        app:layout_constraintTop_toTopOf="@+id/textView2"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_town_departure"
+                        app:layout_constraintStart_toEndOf="@+id/tv_town_departure"
+                        app:layout_constraintTop_toTopOf="@+id/tv_town_departure"
                         app:layout_constraintVertical_bias="0.6" />
 
                     <TextView
@@ -189,10 +189,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
+                android:layout_marginTop="12dp"
                 android:text="Insurance"
                 android:textColor="@color/black"
                 android:textSize="24sp"
-                android:layout_marginTop="12dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView2" />
@@ -208,6 +208,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
             <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/switch_md"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
@@ -235,6 +236,7 @@
                     android:paddingHorizontal="8dp">
 
                     <TextView
+                        android:id="@+id/tv_flight_code"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -245,6 +247,7 @@
                         android:textStyle="bold" />
 
                     <ImageView
+                        android:id="@+id/copy_flight"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end|center_vertical"
@@ -259,9 +262,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="12dp"
                 android:backgroundTint="@color/background_btn_card"
                 app:cardCornerRadius="16dp"
-                android:layout_marginTop="12dp"
                 app:cardElevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -274,6 +277,7 @@
                     android:paddingHorizontal="8dp">
 
                     <TextView
+                        android:id="@+id/place"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -284,6 +288,7 @@
                         android:textStyle="bold" />
 
                     <ImageView
+                        android:id="@+id/copy_place"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end|center_vertical"
@@ -297,14 +302,14 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="72dp"
-        android:elevation="10dp"
         android:background="@color/white"
+        android:elevation="10dp"
+        android:gravity="center_vertical|center_horizontal"
         android:orientation="horizontal"
         android:outlineProvider="none"
-        android:gravity="center_vertical|center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -313,28 +318,28 @@
             android:id="@+id/price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="UAH 15,550"
+            android:layout_marginHorizontal="18dp"
+            android:text="$ 120"
             android:textColor="@color/black"
-            android:textSize="26sp"
-            android:layout_marginHorizontal="24dp"
+            android:textSize="30sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_search_ticket"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_search_ticket"
             style="@style/button_primary"
-            android:layout_width="156dp"
+            android:layout_width="212dp"
             android:layout_height="54dp"
-            android:layout_marginHorizontal="24dp"
             android:layout_marginVertical="16dp"
+            android:layout_marginEnd="26dp"
             android:text="Buy now"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/btn_change"
-            app:layout_constraintTop_toBottomOf="@+id/et_landing_place" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

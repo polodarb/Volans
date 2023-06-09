@@ -1,24 +1,29 @@
 package com.polodarb.volans.ui.fragments
 
-import android.content.res.Resources
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.TransitionDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.motion.widget.MotionLayout
-import androidx.constraintlayout.motion.widget.TransitionAdapter
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.appbar.AppBarLayout
 import com.polodarb.volans.R
 import com.polodarb.volans.databinding.FragmentHomeBinding
 import com.polodarb.volans.ui.recyclers.HomeFlightCardAdapter
 import com.polodarb.volans.ui.recyclers.ItemClickListener
+import com.polodarb.volans.ui.viewModels.CityUiState
+import com.polodarb.volans.ui.viewModels.HomeViewModel
+import com.polodarb.volans.ui.viewModels.UiState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -41,18 +46,78 @@ class HomeFragment : Fragment() {
 
         binding.toolbar.outlineProvider = null
 
-        binding.rvFlightCardHome.layoutManager = LinearLayoutManager(requireContext())
-        val adapter = HomeFlightCardAdapter(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), object : ItemClickListener {
-            override fun itemOnClick(item: Int) {
-                findNavController().navigate(R.id.action_homeFragment_to_ticketDetailFragment)
-            }
-        })
+        val viewModel: HomeViewModel by viewModels()
 
-        binding.rvFlightCardHome.adapter = adapter
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                viewModel.state.collect { uiState ->
+                    when (uiState) {
+                        is UiState.Success -> {
+                            val adapter = HomeFlightCardAdapter(uiState.flight,
+                                object : ItemClickListener {
+                                    override fun itemOnClick(item: Int) {
+                                        findNavController().navigate(R.id.action_homeFragment_to_ticketDetailFragment)
+                                        setFragmentResult("requestKey", bundleOf("bundleKey" to item))
+                                    }
+                                })
+                            binding.rvFlightCardHome.adapter = adapter
+                        }
+
+                        is UiState.Loading -> {}
+
+                        is UiState.Error -> {}
+                    }
+                }
+            }
+        }
+
+        // todo: Хотел взять список городов и поместить в диалог (Что бы выбирать города так, а не писать)
+        val placesArray = mutableListOf<String>()
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                viewModel.city.collect { uiState ->
+                    when (uiState) {
+                        is CityUiState.Success -> {
+                            placesArray.addAll(uiState.flight)
+                        }
+
+                        is CityUiState.Loading -> {}
+
+                        is CityUiState.Error -> {}
+                    }
+                }
+            }
+        }
+
+        binding.rvFlightCardHome.layoutManager = LinearLayoutManager(requireContext())
 
         binding.btnFilter.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_filterFragments)
         }
 
     }
+
+    private suspend fun viewModelStates(viewModel: HomeViewModel) {
+        viewModel.state.collect { uiState ->
+            when (uiState) {
+                is UiState.Success -> {
+//                    setAdapter(uiState.data)
+                }
+
+                is UiState.Loading -> {}
+
+                is UiState.Error -> {}
+            }
+        }
+    }
+
+//    private fun setAdapter(list: List<String>) {
+//        val adapter = ListOfBreedsRV(list, object : ItemClickListener {
+//            override fun itemOnClick(item: String) {
+//                Toast.makeText(requireContext(), item, Toast.LENGTH_SHORT).show()
+//            }
+//        })
+//        binding.rvMain.adapter = adapter
+//    }
+
 }

@@ -8,5 +8,5 @@
     <string name="departure_time">Departure time</string>
     <string name="landing_time">Landing time</string>
     <string name="price">Price</string>
-    <string name="create_a_ticket">Create a ticket</string>
+    <string name="create_a_ticket">Create a flight</string>
 </resources>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/flightCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginBottom="20dp"
+    app:cardBackgroundColor="@color/background_btn_card"
+    app:cardCornerRadius="24dp"
+    app:cardElevation="0dp">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:rotation="90"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_plane"
+        app:tint="@color/primary" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginVertical="14dp"
+                android:layout_marginStart="24dp"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/town_departure"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kharkiv"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/code_airport_departure"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="6dp"
+                        android:layout_marginBottom="3dp"
+                        android:layout_weight="1"
+                        android:gravity="bottom"
+                        android:text="[HRK]"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <TextView
+                    android:id="@+id/tv_time_departure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="23:30"
+                    android:textColor="@color/primary"
+                    android:textSize="40sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_date_departure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Tue, Mar 27"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginVertical="14dp"
+                android:layout_marginEnd="24dp"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/town_landing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Seattle"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/code_airport_landing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="6dp"
+                        android:layout_marginBottom="3dp"
+                        android:layout_weight="1"
+                        android:gravity="bottom"
+                        android:text="[SEA]"
+                        android:textColor="@color/gray"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <TextView
+                    android:id="@+id/tv_time_landing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="07:00"
+                    android:textColor="@color/primary"
+                    android:textSize="40sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_date_landing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Wed, Mar 28"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status: actual"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp"
+            android:layout_marginStart="24dp"
+            android:textSize="18sp"
+            android:textColor="#1F710C"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.cardview.widget.CardView>

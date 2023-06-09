@@ -9,5 +9,5 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "place")
 data class Place(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "place_code", typeAffinity = INTEGER) val placeCode: Int,
-    @ColumnInfo(name = "place_number", typeAffinity = TEXT) val placeNumber: String
+    @ColumnInfo(name = "place_status", typeAffinity = TEXT) val placeNumber: String
 )

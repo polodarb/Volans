@@ -70,6 +70,23 @@ class AdminFragment : Fragment() {
 //            )
 //        }
 
+        val placesArray = arrayOf(
+            "Kharkiv, Ukraine",
+            "Kiyv, Ukraine",
+            "Seattle, USA",
+            "NY, USA",
+            "London, UK",
+            "Paris, France",
+            "Berlin, Germany",
+            "Prague, Czech Republic",
+            "Hong Kong, China",
+            "Tokyo, Japan",
+            "Istanbul, Turkey",
+            "Frankfurt, Germany",
+            "Dublin, Ireland",
+            "Rome, Italy"
+        )
+
         binding.etPlaceOfDeparture.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle("Place of departure")
@@ -80,24 +97,28 @@ class AdminFragment : Fragment() {
                     // Respond to positive button press
                 }
                 .setSingleChoiceItems(
-                    arrayOf(
-                        "Kharkiv, Ukraine",
-                        "Kiyv, Ukraine",
-                        "Seattle, USA",
-                        "NY, USA",
-                        "London, UK",
-                        "Paris, France",
-                        "Berlin, Germany",
-                        "Prague, Czech Republic",
-                        "Hong Kong, China",
-                        "Tokyo, Japan",
-                        "Istanbul, Turkey",
-                        "Frankfurt, Germany",
-                        "Dublin, Ireland",
-                        "Rome, Italy"
-                    ), 0
+                    placesArray, -1
                 ) { dialog, which ->
-                    binding.etPlaceOfDeparture.setText(which.toString()) //todo
+                    val selectedPlace = placesArray[which]
+                    binding.etPlaceOfDeparture.setText(selectedPlace)
+                }
+                .show()
+        }
+
+        binding.etLandingPlace.setOnClickListener {
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Landing place")
+                .setNegativeButton("Cancel") { dialog, which ->
+                    // Respond to negative button press
+                }
+                .setPositiveButton("OK") { dialog, which ->
+                    // Respond to positive button press
+                }
+                .setSingleChoiceItems(
+                    placesArray, -1
+                ) { dialog, which ->
+                    val selectedPlace = placesArray[which]
+                    binding.etLandingPlace.setText(selectedPlace)
                 }
                 .show()
         }

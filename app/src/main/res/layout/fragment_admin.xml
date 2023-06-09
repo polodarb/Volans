@@ -60,7 +60,8 @@
             android:drawableStart="@drawable/ic_flight_land"
             android:drawablePadding="12dp"
             android:hint="@string/landing_place"
-            android:inputType="text"
+            android:inputType="none"
+            android:focusable="false"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_place_of_departure" />
 

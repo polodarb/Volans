@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.ColumnInfo.Companion.INTEGER
 import androidx.room.ColumnInfo.Companion.REAL
 import androidx.room.ColumnInfo.Companion.TEXT
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
@@ -29,7 +30,8 @@ data class Flight(
     @ColumnInfo(name = "departure_code", typeAffinity = INTEGER) val departureCode: Int, //foreign key (airport_code)
     @ColumnInfo(name = "arrival_code", typeAffinity = INTEGER) val arrivalCode: Int, //foreign key (airport_code)
     @ColumnInfo(name = "departure_date", typeAffinity = TEXT) val departureDate: String,
+    @ColumnInfo(name = "arrival_date", typeAffinity = TEXT) val arrivalDate: String,
     @ColumnInfo(name = "departure_time", typeAffinity = TEXT) val departureTime: String,
     @ColumnInfo(name = "arrival_time", typeAffinity = TEXT) val arrivalTime: String,
-    @ColumnInfo(name = "price", typeAffinity = REAL) val price: Float
+    @ColumnInfo(name = "price", typeAffinity = INTEGER) val price: Int
 )
