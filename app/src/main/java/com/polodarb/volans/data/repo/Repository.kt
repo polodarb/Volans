@@ -4,6 +4,7 @@ import com.polodarb.volans.data.local.AviaDao
 import com.polodarb.volans.data.local.FlightCard
 import com.polodarb.volans.data.local.FlightDetails
 import com.polodarb.volans.data.local.entities.Airport
+import com.polodarb.volans.data.local.entities.BuyTicket
 import com.polodarb.volans.data.local.entities.Flight
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -45,7 +46,7 @@ class Repository @Inject constructor(val db: AviaDao) {
 
     suspend fun addAirport(airport: Airport) = db.addAirport(airport)
 
-//    suspend fun addBuyTicket(buyTicket: FlightCard) = db.addBuyTickets(buyTicket)
+    suspend fun addBuyTicket(buyTicket: BuyTicket) = db.addBuyTickets(buyTicket)
 
     suspend fun addFlight(flight: Flight) = db.addFlight(flight)
 

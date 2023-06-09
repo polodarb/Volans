@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -16,10 +18,9 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_CLOCK
 import com.google.android.material.timepicker.TimeFormat
 import com.polodarb.volans.R
-import com.polodarb.volans.data.local.entities.Airport
-import com.polodarb.volans.data.local.entities.Flight
 import com.polodarb.volans.databinding.FragmentAdminBinding
-import com.polodarb.volans.ui.viewModels.AdminViewModel
+import com.polodarb.volans.ui.viewModels.CityUiState
+import com.polodarb.volans.ui.viewModels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -42,50 +43,26 @@ class AdminFragment : Fragment() {
 
         activity?.window?.statusBarColor = resources.getColor(R.color.white, null)
 
-        val viewModel: AdminViewModel by viewModels()
+        val viewModel: HomeViewModel by viewModels()
 
+        viewModel.getCity()
 
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            viewModel.addAirport(
-//                Airport(
-//                    airportCode = 0,
-//                    airportCountry = "Ukraine",
-//                    airportName = "[KHA]",
-//                    airportCity = "Kiyv"
-//                )
-//            )
-//        }
+        val placesArray = mutableListOf<String>()
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                viewModel.city.collect { uiState ->
+                    when (uiState) {
+                        is CityUiState.Success -> {
+                            placesArray.addAll(uiState.flight)
+                        }
 
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            viewModel.addFlight(
-//                Flight(
-//                    flightCode = 0,
-//                    departureCode = 0,
-//                    arrivalCode = 0,
-//                    departureDate = "06/06/2023",
-//                    departureTime = "23:30",
-//                    arrivalTime = "7:00",
-//                    price = 15000f
-//                )
-//            )
-//        }
+                        is CityUiState.Loading -> {}
 
-        val placesArray = arrayOf(
-            "Kharkiv, Ukraine",
-            "Kiyv, Ukraine",
-            "Seattle, USA",
-            "NY, USA",
-            "London, UK",
-            "Paris, France",
-            "Berlin, Germany",
-            "Prague, Czech Republic",
-            "Hong Kong, China",
-            "Tokyo, Japan",
-            "Istanbul, Turkey",
-            "Frankfurt, Germany",
-            "Dublin, Ireland",
-            "Rome, Italy"
-        )
+                        is CityUiState.Error -> {}
+                    }
+                }
+            }
+        }
 
         binding.etPlaceOfDeparture.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext())
@@ -97,7 +74,7 @@ class AdminFragment : Fragment() {
                     // Respond to positive button press
                 }
                 .setSingleChoiceItems(
-                    placesArray, -1
+                    placesArray.toTypedArray(), -1
                 ) { dialog, which ->
                     val selectedPlace = placesArray[which]
                     binding.etPlaceOfDeparture.setText(selectedPlace)
@@ -115,7 +92,7 @@ class AdminFragment : Fragment() {
                     // Respond to positive button press
                 }
                 .setSingleChoiceItems(
-                    placesArray, -1
+                    placesArray.toTypedArray(), -1
                 ) { dialog, which ->
                     val selectedPlace = placesArray[which]
                     binding.etLandingPlace.setText(selectedPlace)
@@ -180,6 +157,22 @@ class AdminFragment : Fragment() {
 
         binding.etDepartureDate.setOnClickListener {
             pickerDateDeparture.show(childFragmentManager, "tag")
+        }
+
+        binding.btnCreateTicket.setOnClickListener {
+            if (
+                binding.etDepartureDate.text.isEmpty()
+                or binding.etDepartureTime.text.isEmpty()
+                or binding.etLandingPlace.text.isEmpty()
+                or binding.etLandingTime.text.isEmpty()
+                or binding.etPrice.text.isEmpty()
+                or binding.etLandingPlace.text.isEmpty()
+            ) {
+                Toast.makeText(requireContext(), "Not all fields are full!", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                Toast.makeText(requireContext(), "The flight is created", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

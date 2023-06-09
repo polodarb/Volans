@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.polodarb.volans.R
 import com.polodarb.volans.databinding.FragmentHomeBinding
 import com.polodarb.volans.ui.recyclers.HomeFlightCardAdapter
@@ -48,6 +49,8 @@ class HomeFragment : Fragment() {
 
         val viewModel: HomeViewModel by viewModels()
 
+        viewModel.getCity()
+
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.state.collect { uiState ->
@@ -71,7 +74,6 @@ class HomeFragment : Fragment() {
             }
         }
 
-        // todo: Хотел взять список городов и поместить в диалог (Что бы выбирать города так, а не писать)
         val placesArray = mutableListOf<String>()
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.CREATED) {
@@ -89,35 +91,55 @@ class HomeFragment : Fragment() {
             }
         }
 
+        binding.etPlaceOfDeparture.setOnClickListener {
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Place of departure")
+                .setNegativeButton("Cancel") { dialog, which ->
+                    // Respond to negative button press
+                }
+                .setPositiveButton("OK") { dialog, which ->
+                    // Respond to positive button press
+                }
+                .setSingleChoiceItems(
+                    placesArray.toTypedArray(), -1
+                ) { dialog, which ->
+                    val selectedPlace = placesArray[which]
+                    binding.etPlaceOfDeparture.setText(selectedPlace)
+                }
+                .show()
+        }
+
+        binding.etLandingPlace.setOnClickListener {
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Landing place")
+                .setNegativeButton("Cancel") { dialog, which ->
+                    // Respond to negative button press
+                }
+                .setPositiveButton("OK") { dialog, which ->
+                    // Respond to positive button press
+                }
+                .setSingleChoiceItems(
+                    placesArray.toTypedArray(), -1
+                ) { dialog, which ->
+                    val selectedPlace = placesArray[which]
+                    binding.etLandingPlace.setText(selectedPlace)
+                }
+                .show()
+        }
+
         binding.rvFlightCardHome.layoutManager = LinearLayoutManager(requireContext())
+
+        binding.btnChange.setOnClickListener {
+            val dep = binding.etPlaceOfDeparture.text
+            val arr = binding.etLandingPlace.text
+
+            binding.etPlaceOfDeparture.text = arr
+            binding.etLandingPlace.text = dep
+        }
 
         binding.btnFilter.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_filterFragments)
         }
 
     }
-
-    private suspend fun viewModelStates(viewModel: HomeViewModel) {
-        viewModel.state.collect { uiState ->
-            when (uiState) {
-                is UiState.Success -> {
-//                    setAdapter(uiState.data)
-                }
-
-                is UiState.Loading -> {}
-
-                is UiState.Error -> {}
-            }
-        }
-    }
-
-//    private fun setAdapter(list: List<String>) {
-//        val adapter = ListOfBreedsRV(list, object : ItemClickListener {
-//            override fun itemOnClick(item: String) {
-//                Toast.makeText(requireContext(), item, Toast.LENGTH_SHORT).show()
-//            }
-//        })
-//        binding.rvMain.adapter = adapter
-//    }
-
 }

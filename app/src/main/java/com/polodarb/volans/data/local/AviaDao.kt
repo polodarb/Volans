@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.polodarb.volans.data.local.entities.Airport
+import com.polodarb.volans.data.local.entities.BuyTicket
 import com.polodarb.volans.data.local.entities.Flight
 
 @Dao
@@ -61,11 +62,11 @@ interface AviaDao {
     @Query("SELECT * FROM airport WHERE airport_city = 'Kharviv'")
     fun getAirports(): List<Airport>
 
-    @Query("SELECT airport_city FROM airport")
+    @Query("SELECT DISTINCT airport_city FROM airport")
     fun getSities(): List<String>
 
-//    @Insert
-//    suspend fun addBuyTickets(tickets: FlightCard)
+    @Insert
+    suspend fun addBuyTickets(ticket: BuyTicket)
 
     @Insert
     suspend fun addAirport(airport: Airport)

@@ -3,6 +3,7 @@ package com.polodarb.volans.ui.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.polodarb.volans.data.local.FlightCard
+import com.polodarb.volans.data.local.entities.BuyTicket
 import com.polodarb.volans.data.repo.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,7 +32,7 @@ class TicketDetaileViewModel @Inject constructor(
 //        return repository.getFlightCard(flight)
 //    }
 
-//    suspend fun addBuyTicket(ticket: FlightCard) {
-//        repository.addBuyTicket(ticket)
-//    }
+    suspend fun addBuyTicket(ticket: BuyTicket) {
+        repository.addBuyTicket(ticket)
+    }
 }

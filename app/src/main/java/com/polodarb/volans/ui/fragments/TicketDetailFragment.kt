@@ -14,6 +14,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.polodarb.volans.R
 import com.polodarb.volans.data.local.FlightCard
+import com.polodarb.volans.data.local.entities.BuyTicket
 import com.polodarb.volans.databinding.FragmentTicketDetailBinding
 import com.polodarb.volans.ui.viewModels.FlightDetailUiState
 import com.polodarb.volans.ui.viewModels.TicketDetaileViewModel
@@ -32,7 +33,7 @@ class TicketDetailFragment : Fragment() {
     }
 
     var price: Int = 0
-    var flightCode: Int = 0
+    var flightCode: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -73,7 +74,6 @@ class TicketDetailFragment : Fragment() {
                             binding.place.text = "Place in plane: ${(1..120).random()}"
                             binding.price.text = "$ ${uiState.ticket.price}"
                             price = uiState.ticket.price
-                            flightCode = uiState.ticket.flightCode
                         }
 
                         is FlightDetailUiState.Loading -> {}
@@ -94,7 +94,9 @@ class TicketDetailFragment : Fragment() {
 
 //        binding.btnSearchTicket.setOnClickListener {
 //            CoroutineScope(Dispatchers.IO).launch {
-//                viewModel.getFlightCard(flightCode)
+//                viewModel.addBuyTicket(BuyTicket(
+//                    0,
+//                ))
 //            }
 //        }
 

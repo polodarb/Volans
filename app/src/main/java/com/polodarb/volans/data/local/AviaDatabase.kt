@@ -8,6 +8,7 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.polodarb.volans.data.local.entities.Airport
+import com.polodarb.volans.data.local.entities.BuyTicket
 import com.polodarb.volans.data.local.entities.Client
 import com.polodarb.volans.data.local.entities.Employee
 import com.polodarb.volans.data.local.entities.Flight
@@ -21,7 +22,8 @@ import com.polodarb.volans.data.local.entities.Ticket
         Employee::class,
         Flight::class,
         Place::class,
-        Ticket::class
+        Ticket::class,
+        BuyTicket::class
     ],
     version = 5
 )
