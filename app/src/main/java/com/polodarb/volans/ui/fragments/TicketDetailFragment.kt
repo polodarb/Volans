@@ -69,7 +69,8 @@ class TicketDetailFragment : Fragment() {
                             binding.townLanding.text = uiState.ticket.arrivalCity
                             binding.tvDateDeparture.text = uiState.ticket.departureDate
                             binding.tvDateLanding.text = uiState.ticket.arrivalDate
-                            binding.tvTimeDeparture.text = uiState.ticket.arrivalTime
+                            binding.tvTimeDeparture.text = uiState.ticket.departureTime
+                            binding.tvTimeLanding.text = uiState.ticket.arrivalTime
                             binding.tvFlightCode.text = "Flight code: ${uiState.ticket.flightCode}"
                             binding.place.text = "Place in plane: ${(1..120).random()}"
                             binding.price.text = "$ ${uiState.ticket.price}"

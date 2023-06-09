@@ -1,5 +1,6 @@
 package com.polodarb.volans.data.repo
 
+import android.util.Log
 import com.polodarb.volans.data.local.AviaDao
 import com.polodarb.volans.data.local.FlightCard
 import com.polodarb.volans.data.local.FlightDetails
@@ -43,6 +44,18 @@ class Repository @Inject constructor(val db: AviaDao) {
     }
 
     fun getAirports() = db.getAirports()
+
+    suspend fun getDepartureCodeByCity(city: String): List<Int> {
+        return withContext(Dispatchers.IO) {
+            db.getDepartureCodeByCity(city)
+        }
+    }
+
+    suspend fun getArrivalCodeByCity(city: String): List<Int> {
+        return withContext(Dispatchers.IO) {
+            db.getArrivalCodeByCity(city)
+        }
+    }
 
     suspend fun addAirport(airport: Airport) = db.addAirport(airport)
 

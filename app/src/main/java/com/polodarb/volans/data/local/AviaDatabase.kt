@@ -104,7 +104,7 @@ abstract class AviaDatabase : RoomDatabase() {
 
                 val airportData: Array<Array<Any>> = arrayOf(
                     arrayOf(1, "[KHA]", "Ukraine", "Kharkiv"),
-                    arrayOf(2, "[IEV]", "Ukraine", "Kiev"),
+                    arrayOf(2, "[IEV]", "Ukraine", "Kyiv"),
                     arrayOf(3, "[LON]", "UK", "London"),
                     arrayOf(4, "[NYC]", "US", "NY"),
                     arrayOf(5, "[PAR]", "France", "Paris"),

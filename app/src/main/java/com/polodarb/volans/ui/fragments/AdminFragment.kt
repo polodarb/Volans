@@ -1,6 +1,7 @@
 package com.polodarb.volans.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,12 +19,17 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_CLOCK
 import com.google.android.material.timepicker.TimeFormat
 import com.polodarb.volans.R
+import com.polodarb.volans.data.local.entities.Flight
 import com.polodarb.volans.databinding.FragmentAdminBinding
+import com.polodarb.volans.ui.viewModels.AdminViewModel
 import com.polodarb.volans.ui.viewModels.CityUiState
 import com.polodarb.volans.ui.viewModels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -43,7 +49,7 @@ class AdminFragment : Fragment() {
 
         activity?.window?.statusBarColor = resources.getColor(R.color.white, null)
 
-        val viewModel: HomeViewModel by viewModels()
+        val viewModel: AdminViewModel by viewModels()
 
         viewModel.getCity()
 
@@ -171,7 +177,46 @@ class AdminFragment : Fragment() {
                 Toast.makeText(requireContext(), "Not all fields are full!", Toast.LENGTH_SHORT)
                     .show()
             } else {
-                Toast.makeText(requireContext(), "The flight is created", Toast.LENGTH_SHORT).show()
+                val departureTime = binding.etDepartureTime.text.toString()
+                val arrivalTime = binding.etLandingTime.text.toString()
+                val departureDate = binding.etDepartureDate.text.toString()
+
+                val sdf = SimpleDateFormat("dd.MM.yy")
+                val departureDateTime = sdf.parse("$departureDate $departureTime")
+                val arrivalDateTime = sdf.parse("$departureDate $arrivalTime")
+
+                val calendar = Calendar.getInstance()
+                calendar.time = departureDateTime
+
+                if (arrivalDateTime.before(departureDateTime)) {
+                    calendar.add(Calendar.DAY_OF_MONTH, 1)
+                }
+
+                val arrivalDate = sdf.format(calendar.time)
+
+                val departureCodeList = viewModel.getDepartureCodeByCity(binding.etPlaceOfDeparture.text.toString()).value
+                val departureCode = departureCodeList?.firstOrNull() ?: 0
+
+                val arrivalCodeList = viewModel.getArrivalCodeByCity(binding.etLandingPlace.text.toString()).value
+                val arrivalCode = arrivalCodeList?.firstOrNull() ?: 0
+
+                Log.wtf("123", "departureCode - $departureCode")
+                Log.wtf("123", "arrivalCode - $arrivalCode")
+
+//                CoroutineScope(Dispatchers.IO).launch {
+//                    viewModel.addFlight(
+//                        Flight(
+//                            flightCode = 55,
+//                            departureCode = departureCode,
+//                            arrivalCode = arrivalCode,
+//                            departureTime = binding.etDepartureTime.text.toString(),
+//                            departureDate = binding.etDepartureDate.text.toString(),
+//                            arrivalDate = arrivalDate,
+//                            arrivalTime = binding.etLandingTime.text.toString(),
+//                            price = binding.etPrice.text.toString().toInt()
+//                        )
+//                    )
+//                }
             }
         }
     }

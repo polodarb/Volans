@@ -1,5 +1,8 @@
 package com.polodarb.volans.ui.viewModels
 
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.polodarb.volans.data.local.entities.Airport
@@ -27,6 +30,22 @@ class AdminViewModel @Inject constructor(
                 _city.value = CityUiState.Success(it)
             }
         }
+    }
+
+    fun getDepartureCodeByCity(city: String): MutableLiveData<List<Int>> {
+        val departureCodeResult = MutableLiveData<List<Int>>()
+        viewModelScope.launch {
+            departureCodeResult.value = repo.getDepartureCodeByCity(city)
+        }
+        return departureCodeResult
+    }
+
+    fun getArrivalCodeByCity(city: String): LiveData<List<Int>> {
+        val arrivalCodeResult = MutableLiveData<List<Int>>()
+        viewModelScope.launch {
+            arrivalCodeResult.value = repo.getArrivalCodeByCity(city)
+        }
+        return arrivalCodeResult
     }
 
     suspend fun addAirport(airport: Airport) {

@@ -2,6 +2,7 @@ package com.polodarb.volans.data.local
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.polodarb.volans.data.local.entities.Airport
 import com.polodarb.volans.data.local.entities.BuyTicket
@@ -65,13 +66,19 @@ interface AviaDao {
     @Query("SELECT DISTINCT airport_city FROM airport")
     fun getSities(): List<String>
 
+    @Query("SELECT departure_code FROM flight WHERE departure_code IN (SELECT airport_code FROM airport WHERE airport_city = :city)")
+    fun getDepartureCodeByCity(city: String): List<Int>
+
+    @Query("SELECT arrival_code FROM flight WHERE arrival_code IN (SELECT airport_code FROM airport WHERE airport_city = :city)")
+    fun getArrivalCodeByCity(city: String): List<Int>
+
     @Insert
     suspend fun addBuyTickets(ticket: BuyTicket)
 
     @Insert
     suspend fun addAirport(airport: Airport)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addFlight(flight: Flight)
 
 }
